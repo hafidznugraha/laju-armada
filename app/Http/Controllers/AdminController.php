@@ -2,12 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Vehicle;
+use App\Models\Booking;
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('admin.dashboard');
+        $totalKendaraan = Vehicle::count();
+
+        $totalBooking = Booking::where('status', 'Booking')->count();
+
+        $totalUser = User::count();
+
+        $pendapatan = Booking::sum('total_harga');
+
+        return view('admin.dashboard', compact(
+            'totalKendaraan',
+            'totalBooking',
+            'totalUser',
+            'pendapatan'
+        ));
     }
 }

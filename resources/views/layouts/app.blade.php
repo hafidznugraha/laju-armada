@@ -1,36 +1,41 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laju Armada Admin</title>
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="background:#f4f4f4;">
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+<div class="d-flex">
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+    <!-- Sidebar -->
+    <div style="width:250px; min-height:100vh; background:#0d2a6b;" class="text-white p-4">
+        <h3 class="mb-4">Laju Armada</h3>
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
-    </body>
+        <a href="{{ route('admin.dashboard') }}" class="d-block text-white mb-3 text-decoration-none">Dashboard</a>
+        <a href="{{ route('admin.kendaraan') }}" class="d-block text-white mb-3 text-decoration-none">Kendaraan</a>
+        <a href="#" class="d-block text-white mb-3 text-decoration-none">Booking</a>
+        <a href="#" class="d-block text-white mb-3 text-decoration-none">User</a>
+        <a href="#" class="d-block text-white mb-3 text-decoration-none">Laporan</a>
+
+        <hr class="bg-light">
+
+        <div>{{ Auth::user()->name }}</div>
+    </div>
+
+    <!-- Content -->
+    <div class="flex-grow-1 p-4">
+        @yield('content')
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
 </html>
