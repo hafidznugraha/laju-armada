@@ -7,6 +7,40 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Data Booking</h2>
 
+        <form method="GET" action="{{ route('admin.booking') }}" class="row mb-3">
+
+            <div class="col-md-4">
+                <input type="text"
+                    name="search"
+                    class="form-control"
+                    placeholder="Cari nama penyewa..."
+                    value="{{ request('search') }}">
+            </div>
+
+            <div class="col-md-3">
+                <select name="status" class="form-control">
+                    <option value="">Semua Status</option>
+                    <option value="Booking" {{ request('status') == 'Booking' ? 'selected' : '' }}>
+                        Booking
+                    </option>
+                    <option value="Selesai" {{ request('status') == 'Selesai' ? 'selected' : '' }}>
+                        Selesai
+                    </option>
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <button class="btn btn-primary w-100">Cari</button>
+            </div>
+
+            <div class="col-md-2">
+                <a href="{{ route('admin.booking') }}" class="btn btn-secondary w-100">
+                    Reset
+                </a>
+            </div>
+
+        </form>
+
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalBooking">
             + Tambah Booking
         </button>
@@ -40,7 +74,12 @@
                     @if($item->status == 'Booking')
                     <a href="{{ route('admin.booking.selesai', $item->id) }}"
                         class="btn btn-success btn-sm">
-                        Selesaikan
+                        Selesai
+                    </a>
+
+                    <a href="{{ route('admin.booking.delete', $item->id) }}"
+                        class="btn btn-danger btn-sm">
+                        Batalkan
                     </a>
                     @else
                     <span class="badge bg-secondary">Done</span>
@@ -57,6 +96,10 @@
         </tbody>
 
     </table>
+
+    <div class="mt-3">
+        {{ $bookings->links() }}
+    </div>
 
 </div>
 
@@ -105,11 +148,6 @@
                     <div class="mb-3">
                         <label>Tanggal Kembali</label>
                         <input type="date" name="tgl_kembali" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label>Total Harga</label>
-                        <input type="number" name="total_harga" class="form-control" required>
                     </div>
 
                 </div>

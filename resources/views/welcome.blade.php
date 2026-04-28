@@ -24,7 +24,11 @@
                     <li class="nav-item"><a class="nav-link px-3" href="#">Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link px-3" href="#">Kendaraan</a></li>
                     <li class="nav-item"><a class="nav-link px-3" href="#">Tentang</a></li>
-                    <li class="nav-item"><a class="nav-link px-3" href="#">Login</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="{{ route('login') }}">
+                            Login
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -62,13 +66,24 @@
 
                     <div class="row mt-5">
                         <div class="col-4">
-                            <h3 class="fw-bold" style="color:#081F5C;">120+</h3>
+                            <h3 class="fw-bold" style="color:#081F5C;">
+                                {{ $totalKendaraan }}+
+                            </h3>
                             <p class="text-muted">Unit Armada</p>
                         </div>
 
                         <div class="col-4">
-                            <h3 class="fw-bold" style="color:#081F5C;">500+</h3>
-                            <p class="text-muted">Pelanggan</p>
+                            <h3 class="fw-bold" style="color:#081F5C;">
+                                {{ $totalBooking }}+
+                            </h3>
+                            <p class="text-muted">Total Booking</p>
+                        </div>
+
+                        <div class="col-4">
+                            <h3 class="fw-bold" style="color:#081F5C;">
+                                {{ $totalUser }}+
+                            </h3>
+                            <p class="text-muted">Pengguna</p>
                         </div>
 
                         <div class="col-4">

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Vehicle;
 use App\Models\Booking;
+use App\Models\Vehicle;
+use App\Models\User;
+
 
 class AdminController extends Controller
 {
@@ -24,5 +25,40 @@ class AdminController extends Controller
             'totalUser',
             'pendapatan'
         ));
+    }
+
+    public function laporan()
+    {
+        $totalKendaraan = Vehicle::count();
+
+        $bookingSelesai = Booking::where('status', 'Selesai')->count();
+
+        $pendapatan = Booking::where('status', 'Selesai')->sum('total_harga');
+
+        $riwayat = Booking::with('vehicle')
+            ->where('status', 'Selesai')
+            ->latest()
+            ->get();
+
+        return view('admin.laporan.index', compact(
+            'totalKendaraan',
+            'bookingSelesai',
+            'pendapatan',
+            'riwayat'
+        ));
+    }
+
+    public function user()
+    {
+        $users = User::latest()->get();
+
+        return view('admin.user.index', compact('users'));
+    }
+
+    public function deleteUser($id)
+    {
+        User::findOrFail($id)->delete();
+
+        return redirect()->route('admin.user');
     }
 }

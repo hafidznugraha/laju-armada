@@ -5,6 +5,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\BookingController;
+use App\Models\Vehicle;
+use App\Models\Booking;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +16,16 @@ use App\Http\Controllers\BookingController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
+    $totalKendaraan = Vehicle::count();
+    $totalBooking   = Booking::count();
+    $totalUser      = User::count();
+
+    return view('welcome', compact(
+        'totalKendaraan',
+        'totalBooking',
+        'totalUser'
+    ));
 });
 
 
@@ -85,6 +97,21 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/admin/booking/selesai/{id}', [BookingController::class, 'selesai'])
         ->name('admin.booking.selesai');
+
+    Route::get('/admin/booking', [BookingController::class, 'index'])->name('admin.booking');
+
+    Route::post('/admin/booking/store', [BookingController::class, 'store'])->name('admin.booking.store');
+
+    Route::put('/admin/booking/update/{id}', [BookingController::class, 'update'])->name('admin.booking.update');
+
+    Route::get('/admin/booking/selesai/{id}', [BookingController::class, 'selesai'])->name('admin.booking.selesai');
+
+    Route::get('/admin/booking/delete/{id}', [BookingController::class, 'destroy'])->name('admin.booking.delete');
+
+    Route::get('/admin/laporan', [AdminController::class, 'laporan'])->name('admin.laporan');
+
+    Route::get('/admin/user', [AdminController::class, 'user'])->name('admin.user');
+    Route::get('/admin/user/delete/{id}', [AdminController::class, 'deleteUser'])->name('admin.user.delete');
 });
 
 
