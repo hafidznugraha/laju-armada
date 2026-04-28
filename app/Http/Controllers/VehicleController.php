@@ -14,6 +14,13 @@ class VehicleController extends Controller
         return view('admin.kendaraan.index', compact('vehicles'));
     }
 
+    public function publicIndex()
+    {
+        $vehicles = Vehicle::latest()->get();
+
+        return view('kendaraan-public', compact('vehicles'));
+    }
+
     public function store(Request $request)
     {
         $namaFoto = '';

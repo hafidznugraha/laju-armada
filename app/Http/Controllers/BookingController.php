@@ -105,4 +105,42 @@ class BookingController extends Controller
 
         return redirect()->route('admin.booking');
     }
+
+    public function publicForm()
+    {
+        $vehicles = Vehicle::where('status', 'Tersedia')->get();
+
+        return view('booking-public', compact('vehicles'));
+    }
+
+    public function publicStore(Request $request)
+    {
+        $vehicle = Vehicle::findOrFail($request->vehicle_id);
+
+        $hari = \Carbon\Carbon::parse($request->tgl_sewa)
+            ->diffInDays(\Carbon\Carbon::parse($request->tgl_kembali));
+
+        if ($hari == 0) {
+            $hari = 1;
+        }
+
+        $total = $hari * $vehicle->harga;
+
+        Booking::create([
+            'vehicle_id'   => $request->vehicle_id,
+            'nama_penyewa' => $request->nama_penyewa,
+            'no_hp'        => $request->no_hp,
+            'tgl_sewa'     => $request->tgl_sewa,
+            'tgl_kembali'  => $request->tgl_kembali,
+            'total_harga'  => $total,
+            'status'       => 'Booking',
+        ]);
+
+        Vehicle::where('id', $request->vehicle_id)
+            ->update([
+                'status' => 'Disewa'
+            ]);
+
+        return redirect('/')->with('success', 'Booking berhasil!');
+    }
 }

@@ -89,6 +89,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/kendaraan/delete/{id}', [VehicleController::class, 'destroy'])
         ->name('admin.kendaraan.delete');
 
+    Route::get('/kendaraan', [VehicleController::class, 'publicIndex'])
+        ->name('kendaraan.public');
+
     Route::get('/admin/booking', [BookingController::class, 'index'])
         ->name('admin.booking');
 
@@ -113,6 +116,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/user', [AdminController::class, 'user'])->name('admin.user');
     Route::get('/admin/user/delete/{id}', [AdminController::class, 'deleteUser'])->name('admin.user.delete');
 });
+
+Route::get('/kendaraan', [VehicleController::class, 'publicIndex'])
+    ->name('kendaraan.public');
+
+Route::get('/booking', [BookingController::class, 'publicForm'])
+    ->name('booking.public');
+
+Route::post('/booking', [BookingController::class, 'publicStore'])
+    ->name('booking.public.store');
 
 
 require __DIR__ . '/auth.php';

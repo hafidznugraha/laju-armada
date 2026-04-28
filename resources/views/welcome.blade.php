@@ -25,9 +25,15 @@
                     <li class="nav-item"><a class="nav-link px-3" href="#">Kendaraan</a></li>
                     <li class="nav-item"><a class="nav-link px-3" href="#">Tentang</a></li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="{{ route('login') }}">
+                        @auth
+                        <a href="{{ route('admin.dashboard') }}" class="nav-link px-3">
+                            Dashboard
+                        </a>
+                        @else
+                        <a href="{{ route('login') }}" class="nav-link px-3">
                             Login
                         </a>
+                        @endauth
                     </li>
                 </ul>
             </div>
@@ -53,12 +59,22 @@
                     </p>
 
                     <div class="mt-4">
-                        <a href="#" class="btn btn-lg me-2 text-white px-4"
+                        @auth
+                        <a href="{{ route('kendaraan.public') }}"
+                            class="btn btn-lg me-2 text-white px-4"
                             style="background:#334EAC;">
                             Booking Sekarang
                         </a>
+                        @else
+                        <a href="{{ route('login') }}"
+                            class="btn btn-lg me-2 text-white px-4"
+                            style="background:#334EAC;">
+                            Booking Sekarang
+                        </a>
+                        @endauth
 
-                        <a href="#" class="btn btn-lg px-4 border"
+                        <a href="{{ route('kendaraan.public') }}"
+                            class="btn btn-lg px-4 border"
                             style="border-color:#334EAC;color:#334EAC;">
                             Lihat Unit
                         </a>
